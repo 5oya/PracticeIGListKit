@@ -2,7 +2,6 @@ import UIKit
 import IGListKit
 
 final class UserHistoryCollectionViewCell: UICollectionViewCell {
-
     private lazy var separator: CALayer = {
         let layer = CALayer()
         self.contentView.layer.addSublayer(layer)

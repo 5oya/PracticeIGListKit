@@ -10,7 +10,7 @@ final class TimelineNavigationController: UINavigationController {
 }
 
 final class TimelineViewController: UIViewController {
-    private lazy var adapter: IGListAdapter = {
+    lazy var adapter: IGListAdapter = {
         return IGListAdapter(updater: IGListAdapterUpdater(), viewController: self, workingRangeSize: 0)
     }()
     private let collectionView = IGListCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -29,18 +29,16 @@ final class TimelineViewController: UIViewController {
         title = "IGListKit"
 
         view.addSubview(collectionView)
-        collectionView.frame = view.bounds
-
         adapter.collectionView = collectionView
         adapter.dataSource = self
     }
 
 
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
 
-//        collectionView.frame = view.bounds
-//    }
+        collectionView.frame = view.bounds
+    }
 
 }
 
@@ -59,19 +57,31 @@ extension TimelineViewController: IGListAdapterDataSource {
                 User(id: 7, nickname: "rina")
             ]),
             RecommendFeed(),
-            Feed(id: UUID().uuidString, user: User(id: 1, nickname: "soya"), comment: "はい...", image: UIImage(named: "IMG_005.jpg")!),
-            Feed(id: UUID().uuidString, user: User(id: 2, nickname: "soya"), comment: "おっさんそば食えや", image: UIImage(named: "IMG_005.jpg")!)
+            Feed(id: UUID().uuidString, user: User(id: 1, nickname: "soya"), comment: "はい...", image: UIImage(named: "cat1.jpg")!),
+            Feed(id: UUID().uuidString, user: User(id: 2, nickname: "soya"), comment: "おっさんそば食えや", image: UIImage(named: "cat2.jpg")!),
+            PhotoList(photos: [
+                Photo(id: UUID().uuidString, user: User(id: 7, nickname: "kaneko"), image: UIImage(named: "cat1.jpg")!),
+                Photo(id: UUID().uuidString, user: User(id: 7, nickname: "kaneko"), image: UIImage(named: "dog1.jpg")!),
+                Photo(id: UUID().uuidString, user: User(id: 7, nickname: "kaneko"), image: UIImage(named: "cat2.jpg")!),
+                Photo(id: UUID().uuidString, user: User(id: 7, nickname: "kaneko"), image: UIImage(named: "dog2.jpg")!),
+                Photo(id: UUID().uuidString, user: User(id: 7, nickname: "kaneko"), image: UIImage(named: "cat3.jpg")!),
+                Photo(id: UUID().uuidString, user: User(id: 7, nickname: "kaneko"), image: UIImage(named: "dog3.jpg")!),
+                Photo(id: UUID().uuidString, user: User(id: 7, nickname: "kaneko"), image: UIImage(named: "cat1.jpg")!),
+                Photo(id: UUID().uuidString, user: User(id: 7, nickname: "kaneko"), image: UIImage(named: "dog1.jpg")!),
+                Photo(id: UUID().uuidString, user: User(id: 7, nickname: "kaneko"), image: UIImage(named: "cat2.jpg")!),
+                Photo(id: UUID().uuidString, user: User(id: 7, nickname: "kaneko"), image: UIImage(named: "dog2.jpg")!),
+                Photo(id: UUID().uuidString, user: User(id: 7, nickname: "kaneko"), image: UIImage(named: "cat3.jpg")!),
+                Photo(id: UUID().uuidString, user: User(id: 7, nickname: "kaneko"), image: UIImage(named: "dog3.jpg")!),
+            ], itemCount: 12)
         ] as [IGListDiffable]
     }
 
     func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
         switch object {
-        case is UserHistory:
-            return UserHistorySectionController()
-        case is RecommendFeed:
-            return RecommendFeedSectionController()
-        default:
-            return FeedSectionController()
+        case is UserHistory:   return UserHistorySectionController()
+        case is RecommendFeed: return RecommendFeedSectionController()
+        case is PhotoList:     return PhotoListSectionController()
+        default:               return FeedSectionController()
         }
     }
 

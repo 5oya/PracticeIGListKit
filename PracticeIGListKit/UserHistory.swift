@@ -2,12 +2,12 @@ import Foundation
 import IGListKit
 
 class UserHistory {
-    let identifier: String
+    let id: String
     let users: [User]
 
 
     init(users: [User]) {
-        self.identifier = "userHistory"
+        self.id = "userHistory"
         self.users = users
     }
 }
@@ -16,14 +16,14 @@ class UserHistory {
 extension UserHistory: IGListDiffable {
 
     func diffIdentifier() -> NSObjectProtocol {
-        return identifier as NSObjectProtocol
+        return id as NSObjectProtocol
     }
 
     func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
         if self === object { return true }
         guard let object = object as? UserHistory else { return false }
         
-        return identifier == object.identifier
+        return id == object.id
     }
 
 }

@@ -4,8 +4,9 @@ import IGListKit
 final class UserHistorySectionController: IGListSectionController, IGListSectionType {
     var userHistory: UserHistory?
     private lazy var adapter: IGListAdapter = {
-       let adapter = IGListAdapter(updater: IGListAdapterUpdater(), viewController: self.viewController, workingRangeSize: 0)
+        let adapter = IGListAdapter(updater: IGListAdapterUpdater(), viewController: self.viewController, workingRangeSize: 0)
         adapter.dataSource = self
+
         return adapter
     }()
 
@@ -41,7 +42,7 @@ final class UserHistorySectionController: IGListSectionController, IGListSection
 extension UserHistorySectionController: IGListAdapterDataSource {
     
     func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
-        return (userHistory?.users)!
+        return userHistory?.users ?? []
     }
     
     func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
